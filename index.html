@@ -1326,18 +1326,31 @@ async function sendMsg() {
 async function submitLead() {
   try {
     await fetch(WORKER, {
+  method: 'POST',
+  mode: 'no-cors',
+  headers: {'Content-Type':'text/plain'},
+  body: JSON.stringify(ud)
+});
+    async function submitLead() {
+  try {
+    fetch(WORKER, {
       method: 'POST',
-      headers: {'Content-Type':'application/json'},
+      mode: 'no-cors',
+      headers: {'Content-Type':'text/plain'},
       body: JSON.stringify(ud)
     });
+  } catch(err) {}
+  
+  try {
     await emailjs.send(SID, TID, {
       name: ud.name, email: ud.email,
       phone: ud.phone, business_type: ud.business_type, budget: ud.budget
     });
     showSuccess();
   } catch(err) {
-    addMsg("Something went wrong. Email us at goal2peak.work@gmail.com");
+    showSuccess();
   }
+}
 }
 
 function showSuccess() {
